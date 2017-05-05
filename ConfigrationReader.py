@@ -2,6 +2,7 @@ import sys
 import os
 import json
 
+
 class ConfigrationReader(object):
     def __init__(self, gitChangesFile, config, couldfomrationOutputs):
         try:

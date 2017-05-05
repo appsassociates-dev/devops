@@ -11,9 +11,9 @@ if __name__ == '__main__':
     crobj = ChangedResources(sys.argv[1], sys.argv[2], sys.argv[3])
     print "Changed Resources", crobj.changedResources
     changedLambdas = crobj.getChangedLambdas()
-    print "Lambdas: " , changedLambdas
+    print "Lambdas: ", changedLambdas
     changedEMRs = crobj.getChangedEMRs()
-    print "EMRs: " , changedEMRs
+    print "EMRs: ", changedEMRs
 
     for eachLambda in changedLambdas:
         config = crobj.configReaderObj.getConfiguration(eachLambda)

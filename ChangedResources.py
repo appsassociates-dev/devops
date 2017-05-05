@@ -2,6 +2,7 @@ import sys
 
 from ConfigrationReader import ConfigrationReader
 
+
 class ChangedResources(object):
     def __init__(self, gitChangesFile, config, couldfomrationOutputs):
         self.configReaderObj = ConfigrationReader(gitChangesFile, config, couldfomrationOutputs)
@@ -33,7 +34,7 @@ class ChangedResources(object):
         return list(set(changedLambdas))
 
     def getChangedEMRs(self):
-        changedEMRS= []
+        changedEMRS = []
         for each in self.changedResources:
             if each['serviceType'] == 'emr':
                 changedEMRS.append(each['serviceName'])
@@ -63,6 +64,7 @@ class ChangedResources(object):
                         arr['jobType'] = 'datapipeline'
                         array.append(arr)
         return array
+
 
 # Unit Test Purpose
 if __name__ == '__main__':
