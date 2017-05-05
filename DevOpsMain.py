@@ -1,7 +1,7 @@
 import sys
 
 from ChangedResources import ChangedResources
-from LambdaUpdater import LambdaUpdater
+from Lambda.LambdaUpdater import LambdaUpdater
 
 if __name__ == '__main__':
     if len(sys.argv) < 2: raise Exception(
