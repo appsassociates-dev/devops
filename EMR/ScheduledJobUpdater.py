@@ -1,66 +1,29 @@
 from abc import abstractmethod, ABCMeta
-from JobInfo import JobInfo
-
-class Logger:
-    def __init__(self):
-        pass
-
-    def debug(self, message):
-        self.__print(message)
-
-    def error(self, message):
-        self.__print(message)
-
-    def info(self, message):
-        self.__print(message)
-
-    def warn(self, message):
-        self.__print(message)
-
-    def __print(self, message):
-        print message
 
 class ScheduledJobUpdater:
     __metaclass__ = ABCMeta
 
     def __init__(self):
-        self.logger = Logger()
         pass
 
-    def UpdateExecutable(self, jobIdToSearch, pathOfExeToUpdate):
-        jobDetail = self.FindMatchingJob(jobIdToSearch)
-        if jobDetail == None:
-            self.logger.error("Job:%s doesn't exist! " % (jobIdToSearch))
-            return
-
-        uri = self.GetPathOfExecutable(jobDetail)
-        if uri == None:
-            self.logger.error("Failed to get executable path for Job:%s!" % (jobIdToSearch))
-            return
-
-        status = self.OverwriteExecutable(jobDetail, pathOfExeToUpdate)
-        if not status:
-            self.logger.error("Failed to overwrite executable for Job:%s!" % (jobIdToSearch))
-            return
+    @abstractmethod
+    def getExecutablepath(self):
+        # gets the appPath from Oozie thorugh rest API using self.getJobInfo()
+        # and returns the HDFS path for the job
+        # where binary can be updated/replaced
+        return None
 
     @abstractmethod
-    def FindMatchingJob(self, jobIdToSearch):
-        return JobInfo()
+    def getJobInfo(self):
+        #returns the job info
+        return None
 
     @abstractmethod
-    def GetPathOfExecutable(self, jobDetail):
-        return ExecutableInfo()
+    def makeBundle(self):
+        # makes bundle (.zip/jar) as per the language convention and return the bundle path
+        return None
 
     @abstractmethod
-    def OverwriteExecutable(self, jobDetail, pathOfExeToUpdate):
+    def updateExecutable(self, src, target):
+        # updates the bundle in the target (ex. hdfs)
         return None
-
-    def __copyToS3(self, source, destination):
-        return None
-
-    def __copyToHdfs(self, source, destination):
-        return None
-
-    def __copyToLocalFs(self, source, destination):
-        return None
-

@@ -2,6 +2,8 @@ import sys
 
 from ChangedResources import ChangedResources
 from Lambda.LambdaUpdater import LambdaUpdater
+from EMR.ScheduledJobUpdaterOozie import ScheduledJobUpdaterOozie
+from EMR.ScheduledJobUpdaterAWSDataPipe import ScheduledJobUpdaterAWSDataPipe
 
 if __name__ == '__main__':
     if len(sys.argv) < 2: raise Exception(
@@ -22,8 +24,12 @@ if __name__ == '__main__':
             print "FAILED to update Lamda Function: %s" % config['serviceName']
 
     for each in changedEMRs:
+        emrConfig = crobj.configReaderObj.getConfiguration(each)
         changedEMRjobs = crobj.identifyEMRjobs(each)
         print "EMR Cluster:%s Jobs Changed:%s " % (each, changedEMRjobs)
         for eachJobChanged in changedEMRjobs:
             config = crobj.configReaderObj.getEMRJobConfiguration(eachJobChanged['jobName'])
             print "JobName:%s JobType:%s JobConfig:%s" % (eachJobChanged['jobName'], eachJobChanged['jobType'], config)
+            if eachJobChanged['jobType'] == 'oozie':
+                oju = ScheduledJobUpdaterOozie(config, emrConfig['oozieUrl'])
+                print oju.getExecutablepath()
