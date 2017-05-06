@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABCMeta
 
+
 class ScheduledJobUpdater:
     __metaclass__ = ABCMeta
 
@@ -15,7 +16,7 @@ class ScheduledJobUpdater:
 
     @abstractmethod
     def getJobInfo(self):
-        #returns the job info
+        # returns the job info
         return None
 
     @abstractmethod

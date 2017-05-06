@@ -1,11 +1,16 @@
 import json
 import urllib2
+
 from ScheduledJobUpdater import ScheduledJobUpdater
+from Utils.Builder import Builder
+from Utils.CopyHandler import HdfsHandler
+
 
 class ScheduledJobUpdaterOozie(ScheduledJobUpdater):
-    def __init__(self, jobConfig, oozieUrl):
+    def __init__(self, jobConfig, oozieUrl, masterHost):
         self.jobConfiguration = jobConfig
         self.oozieUrl = oozieUrl
+        self.masterHost = masterHost
         ScheduledJobUpdater.__init__(self)
         print("Creating ScheduledJobUpdaterOozie instance:%d!" % (id(self)))
         pass
@@ -32,21 +37,28 @@ class ScheduledJobUpdaterOozie(ScheduledJobUpdater):
         if self.jobConfiguration['language'] == 'python':
             print "call python zip bundler"
         elif self.jobConfiguration['language'] == 'java':
-            print "call java jar bundler"
+            print "calling java jar bundler"
+            builder = Builder()
+            jar = builder.buildJar(self.jobConfiguration['folder'])
+            print "Jar File Location: %s" % jar
+            return jar
         return None
 
     def updateExecutable(self, src, target):
         # updates the bundle in the target (ex. hdfs)
-        return None
+        if self.jobConfiguration['storageType'] == 'hdfs':
+            print "calling hdfs handler"
+            sender = HdfsHandler(self.masterHost)
+            return sender.copyToHDFS(src, target)
 
+        elif self.jobConfiguration['storageType'] == 's3':
+            print "calling s3 handler"
+        return None
 
     def update(self):
         # updates the oozie job
         target = self.getExecutablepath()
+        print "target: %s" % target
         src = self.makeBundle()
-        self.updateExecutable(src, target)
-        if self.jobConfiguration['storageType'] == 'hdfs':
-            print "call hdfs handler"
-        elif self.jobConfiguration['storageType'] == 's3':
-            print "call hdfs handler"
-        return None
+        res = self.updateExecutable(src, target)
+        return res

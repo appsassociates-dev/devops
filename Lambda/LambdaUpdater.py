@@ -1,27 +1,24 @@
 """
     This program updates the given source  zip file to the AWS Lambda for given Lambda function ARN.
 """
-import boto3
 import os
-import shutil
+
+import boto3
+
+from Utils.Builder import Builder
 
 
 class LambdaUpdater(object):
     def __init__(self, config):
         self.__config = config  # Place holder for lambda configuration
         self.__client = boto3.client('lambda')
-        folder = self.__config['folder']
-        self.__absoluteFolderPath = self.__getAbsolutePath(folder)
-        self.__file_location = self.__zipFile(self.__absoluteFolderPath)
+        self.builder = Builder()
+        self.__absoluteFolderPath = self.__getAbsolutePath(self.__config['folder'])
+        self.__file_location = self.builder.buildZip(self.__absoluteFolderPath, self.__config['serviceName'])
 
     def __getAbsolutePath(self, folder):
         # print "Current Dir: %s" % os.getcwd()
         return os.path.join(os.getcwd(), folder)
-
-    def __zipFile(self, folder):
-        zipFileName = self.__config['serviceName'] + '.zip'
-        shutil.make_archive(self.__config['serviceName'], 'zip', folder)
-        return zipFileName
 
     def upload_lambda_fuction(self):
         file_bytes_read = open(self.__file_location, "rb").read()

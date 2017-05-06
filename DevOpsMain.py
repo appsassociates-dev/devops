@@ -1,13 +1,16 @@
 import sys
 
-from ChangedResources import ChangedResources
-from Lambda.LambdaUpdater import LambdaUpdater
 from EMR.ScheduledJobUpdaterOozie import ScheduledJobUpdaterOozie
-from EMR.ScheduledJobUpdaterAWSDataPipe import ScheduledJobUpdaterAWSDataPipe
+from Lambda.LambdaUpdater import LambdaUpdater
+from Utils.ChangedResources import ChangedResources
+
+# logging.basicConfig(level=logging.DEBUG)
+# _LOG = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2: raise Exception(
         "ERROR: Insufficient number of arguments, changes.txt, config.json and output.json file paths must be given")
+    # _LOG.debug('Started')
     crobj = ChangedResources(sys.argv[1], sys.argv[2], sys.argv[3])
     print "Changed Resources", crobj.changedResources
     changedLambdas = crobj.getChangedLambdas()
@@ -19,7 +22,7 @@ if __name__ == '__main__':
         config = crobj.configReaderObj.getConfiguration(eachLambda)
         # print config
         if LambdaUpdater(config).upload_lambda_fuction():
-            print "Lamda Function: %s updated successfully" % config['serviceName']
+            print "[SUCCESS] Lamda Function: %s updated successfully" % config['serviceName']
         else:
             print "FAILED to update Lamda Function: %s" % config['serviceName']
 
@@ -31,5 +34,5 @@ if __name__ == '__main__':
             config = crobj.configReaderObj.getEMRJobConfiguration(eachJobChanged['jobName'])
             print "JobName:%s JobType:%s JobConfig:%s" % (eachJobChanged['jobName'], eachJobChanged['jobType'], config)
             if eachJobChanged['jobType'] == 'oozie':
-                oju = ScheduledJobUpdaterOozie(config, emrConfig['oozieUrl'])
-                print oju.getExecutablepath()
+                if ScheduledJobUpdaterOozie(config, emrConfig['oozieUrl'], emrConfig['masterHost']).update():
+                    print "[SUCCESS] EMR Job: %s updated successfully" % eachJobChanged['jobName']

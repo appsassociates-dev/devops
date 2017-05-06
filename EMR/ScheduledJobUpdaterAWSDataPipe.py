@@ -1,5 +1,6 @@
 from ScheduledJobUpdater import ScheduledJobUpdater
 
+
 class Logger:
     def __init__(self):
         pass
@@ -18,6 +19,7 @@ class Logger:
 
     def __print(self, message):
         print message
+
 
 class ScheduledJobUpdaterAWSDataPipe(ScheduledJobUpdater):
     def __init__(self):

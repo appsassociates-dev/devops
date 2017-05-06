@@ -1,32 +1,70 @@
 {
-     "lambda" : [
-           {"serviceName": "HelloWorldPython", "folder": "Config/Source/Lambda/HelloWorldPython", "language" : "python", "description": "Sales Lambda Function"},
-           {"serviceName": "HelloWorldPython2", "folder": "Config/Source/Lambda/HelloWorldPython2", "language" : "python", "description": "Sales Lambda Function"}
-     ],
-
-     "emr" : [
-       {
+  "lambda": [
+    {
+      "serviceName": "HelloWorldPython",
+      "folder": "Config/Source/Lambda/HelloWorldPython",
+      "language": "python",
+      "description": "Sales Lambda Function"
+    },
+    {
+      "serviceName": "HelloWorldPython2",
+      "folder": "Config/Source/Lambda/HelloWorldPython2",
+      "language": "python",
+      "description": "Sales Lambda Function"
+    }
+  ],
+  "emr": [
+    {
       "serviceName": "SimpleEMR",
-      "oozieJobs" : [
-         {
-            "jobType" : "spark",
-            "jobName": "sparkjob",
-            "jobId": "0000000-170504052004824-oozie-oozi-C",
-            "folder": "Config/Source/EMR/Spark",
-            "language": "python",
-            "storageType" : "hdfs"
-         },
-         { "jobType" : "sqoop", "storageType" : "hdfs", "jobName": "sqoopjob", "oozieJobId": "", "folder": "Config/Source/EMR/Sqoop" , "language": "python"},
-         { "jobType" : "hive", "storageType" : "hdfs", "jobName": "hivejob", "oozieJobId": "", "folder": "Config/Source/EMR/Hive" , "language": "python"}
+      "oozieJobs": [
+        {
+          "jobType": "spark",
+          "jobName": "sparkjob",
+          "jobId": "0000000-170504052004824-oozie-oozi-C",
+          "folder": "Config/Source/EMR/Spark",
+          "language": "java",
+          "storageType": "hdfs"
+        },
+        {
+          "jobType": "sqoop",
+          "storageType": "hdfs",
+          "jobName": "sqoopjob",
+          "oozieJobId": "",
+          "folder": "Config/Source/EMR/Sqoop",
+          "language": "python"
+        },
+        {
+          "jobType": "hive",
+          "storageType": "hdfs",
+          "jobName": "hivejob",
+          "oozieJobId": "",
+          "folder": "Config/Source/EMR/Hive",
+          "language": "python"
+        }
       ],
-     "dataPipelineJobs" : [
-         { "jobType" : "sqoop", "storageType" : "s3", "jobName": "sqoopjob", "oozieJobId": "", "folder": "Config/Source/EMR/datapipe/Sqoop" , "language": "python"},
-         { "jobType" : "hive", "storageType" : "s3", "jobName": "hivejob", "oozieJobId": "", "folder": "Config/Source/EMR/datapipe/Hive" , "language": "python"}
+      "dataPipelineJobs": [
+        {
+          "jobType": "sqoop",
+          "storageType": "s3",
+          "jobName": "sqoopjob",
+          "oozieJobId": "",
+          "folder": "Config/Source/EMR/datapipe/Sqoop",
+          "language": "python"
+        },
+        {
+          "jobType": "hive",
+          "storageType": "s3",
+          "jobName": "hivejob",
+          "oozieJobId": "",
+          "folder": "Config/Source/EMR/datapipe/Hive",
+          "language": "python"
+        }
       ],
       "folder": "Config/Source/EMR/",
       "description": "EMR Cluster",
-      "oozieUrl" : "http://ec2-52-14-121-163.us-east-2.compute.amazonaws.com:11000/oozie/"
-          }
-       ]
+      "oozieUrl": "http://ec2-52-14-121-163.us-east-2.compute.amazonaws.com:11000/oozie/",
+      "masterHost": "52.14.121.163"
+    }
+  ]
 }
 
