@@ -30,8 +30,9 @@ if __name__ == '__main__':
         changedEMRjobs = crobj.identifyEMRjobs(each)
         print "EMR Cluster:%s Jobs Changed:%s " % (each, changedEMRjobs)
         for eachJobChanged in changedEMRjobs:
-            config = crobj.configReaderObj.getEMRJobConfiguration(eachJobChanged['jobName'])
-            print "JobName:%s JobType:%s JobConfig:%s" % (eachJobChanged['jobName'], eachJobChanged['jobType'], config)
+            jobConfig = crobj.configReaderObj.getEMRJobConfiguration(eachJobChanged['jobName'])
+            print "JobName:%s JobType:%s JobConfig:%s" % (
+            eachJobChanged['jobName'], eachJobChanged['jobType'], jobConfig)
             if eachJobChanged['jobType'] == 'oozie':
-                if ScheduledJobUpdaterOozie(config, emrConfig['oozieUrl'], emrConfig['masterHost']).update():
+                if ScheduledJobUpdaterOozie(jobConfig, emrConfig).update():
                     print "[SUCCESS] EMR Job: %s updated successfully" % eachJobChanged['jobName']

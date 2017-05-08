@@ -7,10 +7,10 @@ from Utils.CopyHandler import HdfsHandler
 
 
 class ScheduledJobUpdaterOozie(ScheduledJobUpdater):
-    def __init__(self, jobConfig, oozieUrl, masterHost):
+    def __init__(self, jobConfig, emrConfig):
         self.jobConfiguration = jobConfig
-        self.oozieUrl = oozieUrl
-        self.masterHost = masterHost
+        self.oozieUrl = emrConfig['oozieUrl']
+        self.masterHost = emrConfig['masterHost']
         ScheduledJobUpdater.__init__(self)
         print("Creating ScheduledJobUpdaterOozie instance:%d!" % (id(self)))
         pass

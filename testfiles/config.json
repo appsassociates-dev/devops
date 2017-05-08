@@ -4,12 +4,14 @@
       "serviceName": "HelloWorldPython",
       "folder": "Config/Source/Lambda/HelloWorldPython",
       "language": "python",
+      "pomDir": "",
       "description": "Sales Lambda Function"
     },
     {
       "serviceName": "HelloWorldPython2",
       "folder": "Config/Source/Lambda/HelloWorldPython2",
       "language": "python",
+      "pomDir": "",
       "description": "Sales Lambda Function"
     }
   ],
