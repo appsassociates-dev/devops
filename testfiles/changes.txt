@@ -1,1 +1,3 @@
+Config/Source/Lambda/HelloWorldPython/hello_python.py
+Config/Source/Lambda/HelloWorldPython2/hello_python.py
 Config/Source/EMR/SparkWC/added.txt
