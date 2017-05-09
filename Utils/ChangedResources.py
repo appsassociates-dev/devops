@@ -52,6 +52,8 @@ class ChangedResources(object):
             array = []
             for line in ins:
                 for eachOozieJob in emrConfiguration['oozieJobs']:
+                    # print eachOozieJob['folder'], line
+                    # print (eachOozieJob['folder'] in line)
                     if eachOozieJob['folder'] in line:
                         arr = {}
                         arr['jobName'] = eachOozieJob['jobName']

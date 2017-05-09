@@ -39,13 +39,13 @@ class Builder:
         shutil.make_archive(serviceName, 'zip', folder)
         return zipFileName
 
-
-if __name__ == '__main__':
-    builder = Builder()
-    src = 'Config\Source\Spark'
-    jar = builder.buildJar(src)
-    print jar
-    print os.path.isfile(jar)
+    #
+    # if __name__ == '__main__':
+    #     builder = Builder()
+    #     src = 'Config\Source\Spark'
+    #     jar = builder.buildJar(src)
+    #     print jar
+    #     print os.path.isfile(jar)
     # path = builder.getAbsolutePath('Config\Source\Spark')
     # print builder.buildZip(path, 'spark')
     # print builder.getJarFileNameFromPomXml("E:\code\Apps\devops\Config\Source\Spark\pom.xml")

@@ -11,13 +11,18 @@ class HdfsHandler:
         self.s3_client = boto3.client('s3')
 
     def copyToHDFS(self, src_path, hdfs_path):
+        if hdfs_path.startswith("hdfs"):
+            temp_path = hdfs_path.split("8020")
+            self.new_hdfs_path = temp_path[1] + '/lib'
+            print "New Path: %s" % self.new_hdfs_path
         # create a new client instance
+        # print "New Path: %s" % self.new_hdfs_path[1]
         jar_name = os.path.basename(src_path)
         print src_path
         str = open(src_path, 'r').read()
         # create a new file on hdfs
         print('making new file at: {0}\n'.format(jar_name))
-        result = self.hdfs.create_file(hdfs_path + "/" + jar_name, str, overwrite=True)
+        result = self.hdfs.create_file(self.new_hdfs_path + "/" + jar_name, str, overwrite=True)
         print "HDFS Copy Result: %s" % result
         return result
 
