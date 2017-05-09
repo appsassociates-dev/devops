@@ -22,7 +22,7 @@
         {
           "jobType": "spark",
           "jobName": "sparkjob",
-          "jobId": "0000000-170504052004824-oozie-oozi-C",
+          "jobId": "0000754-170504052004824-oozie-oozi-C",
           "folder": "Config/Source/EMR/Spark",
           "language": "java",
           "storageType": "hdfs"

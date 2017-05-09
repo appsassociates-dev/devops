@@ -48,5 +48,5 @@ if __name__ == '__main__':
     sender = HdfsHandler('52.14.121.163')
     src = r'E:\code\Apps\devops\Config\Source\Spark\target\java-0.0.2.jar'
     print "jar file:", os.path.basename(src)
-    sender.copyToHDFS(src, '\tmp')
+    sender.copyToHDFS(src, 'hdfs://ip-172-31-23-66.us-east-2.compute.internal:8020/user/hadoop/hari')
     sender.list_hdfs_dir('sumo-s3processed')
