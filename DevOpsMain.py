@@ -3,6 +3,7 @@ import sys
 from EMR.ScheduledJobUpdaterOozie import ScheduledJobUpdaterOozie
 from Lambda.LambdaUpdater import LambdaUpdater
 from Utils.ChangedResources import ChangedResources
+from Utils.EMRUtil import EMRUtil
 
 # logging.basicConfig(level=logging.DEBUG)
 # _LOG = logging.getLogger(__name__)
@@ -27,6 +28,8 @@ if __name__ == '__main__':
 
     for each in changedEMRs:
         emrConfig = crobj.configReaderObj.getConfiguration(each)
+        emrUtil = EMRUtil()
+        emrUtil.addToKnownHosts(clusterID=emrConfig['arn'])
         changedEMRjobs = crobj.identifyEMRjobs(each)
         print "EMR Cluster:%s Jobs Changed:%s " % (each, changedEMRjobs)
         for eachJobChanged in changedEMRjobs:
