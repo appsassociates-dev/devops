@@ -19,19 +19,17 @@ class HdfsHandler:
         # print "New Path: %s" % self.new_hdfs_path[1]
         jar_name = os.path.basename(src_path)
         print src_path
-        str = open(src_path, 'r').read()
+        fileContent = open(src_path, 'rb').read()
+
+        # copies file to local for testing purpose
+        # with open("E:/temp/java-0.0.2.jar", "wb") as jarfile:
+        #     jarfile.write(fileContent)
+
         # create a new file on hdfs
         print('making new file at: {0}\n'.format(jar_name))
-        result = self.hdfs.create_file(self.new_hdfs_path + "/" + jar_name, str, overwrite=True)
+        result = self.hdfs.create_file(self.new_hdfs_path + "/" + jar_name, fileContent, overwrite=True)
         print "HDFS Copy Result: %s" % result
         return result
-
-    def copyToS3(self, src_path, s3_path):
-        file_name = os.path.basename(src_path)
-        print "File Name: %s" % file_name
-        # str = open(src_path, 'r').read()
-        print 'copying file : %s to S3 Bucket: %s' % (src_path, s3_path)
-        self.s3_client.upload_file(src_path, s3_path, file_name)
 
     def list_hdfs_dir(self, hdfs_path):
         print self.hdfs.list_dir(hdfs_path)
@@ -44,7 +42,7 @@ class S3Handler:
     def copyToS3(self, src_path, s3_path):
         file_name = os.path.basename(src_path)
         print "File Name: %s" % file_name
-        # str = open(src_path, 'r').read()
+        # str = open(src_path, 'rb').read()
         print 'copying file : %s to S3 Bucket: %s' % (src_path, s3_path)
         self.s3_client.upload_file(src_path, s3_path, file_name)
 
